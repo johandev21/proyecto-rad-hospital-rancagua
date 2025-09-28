@@ -4,7 +4,11 @@ import {
   FilePlus,
   Settings,
   Users,
-  Notebook,
+  BookOpen,
+  ClipboardList,
+  Coins,
+  FileText,
+  BarChart2,
 } from "lucide-react";
 
 import {
@@ -46,7 +50,27 @@ const items = [
   {
     title: "Registro de Alumnos",
     url: "/dashboard/registro-de-alumnos",
-    icon: Notebook,
+    icon: BookOpen,
+  },
+  {
+    title: "Asistencia",
+    url: "/dashboard/asistencia",
+    icon: ClipboardList,
+  },
+  {
+    title: "Retribuciones",
+    url: "/dashboard/retribuciones",
+    icon: Coins,
+  },
+  {
+    title: "Documentos",
+    url: "/dashboard/documentos",
+    icon: FileText,
+  },
+  {
+    title: "Reportes",
+    url: "/dashboard/reportes",
+    icon: BarChart2,
   },
   {
     title: "Configuración",

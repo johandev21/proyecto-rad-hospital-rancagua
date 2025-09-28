@@ -12,7 +12,7 @@ import { data } from "./_components/data";
 export default function RegistroAlumnosPage() {
   return (
     <div className="p-4 sm:p-6 md:p-8">
-      <Card>
+      <Card className="bg-card/80">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Registro de Alumnos</CardTitle>
           <CardDescription>
