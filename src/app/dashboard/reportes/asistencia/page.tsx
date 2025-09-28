@@ -39,7 +39,11 @@ export default function ReporteAsistenciaPage() {
 
       <div className="mt-6">
         {results ? (
-          <ResultsTable data={results} />
+          <Card>
+            <CardContent>
+              <ResultsTable data={results} />
+            </CardContent>
+          </Card>
         ) : (
           <Card className="flex flex-col items-center justify-center py-20">
             <CardContent className="text-center">

@@ -94,7 +94,11 @@ export default function ReporteRotacionesPage() {
                 icon={ClipboardCheck}
               />
             </div>
-            <ResultsTable data={results} />
+            <Card>
+              <CardContent>
+                <ResultsTable data={results} />
+              </CardContent>
+            </Card>
           </div>
         ) : (
           <Card className="flex flex-col items-center justify-center py-20">
