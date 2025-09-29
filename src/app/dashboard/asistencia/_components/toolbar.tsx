@@ -29,10 +29,10 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
   return (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <div className="flex flex-1 items-center space-x-2">
-        <ToggleGroup type="single" value={viewMode} onValueChange={(value: 'day' | 'range') => value && setViewMode(value)} size="sm">
-            <ToggleGroupItem value="day">Día</ToggleGroupItem>
-            <ToggleGroupItem value="range">Rango</ToggleGroupItem>
+      <div className="flex flex-1 flex-wrap gap-y-2 items-center space-x-2">
+        <ToggleGroup className="border" type="single" value={viewMode} onValueChange={(value: 'day' | 'range') => value && setViewMode(value)} size="sm">
+            <ToggleGroupItem className="px-4" value="day">Día</ToggleGroupItem>
+            <ToggleGroupItem className="px-4" value="range">Rango</ToggleGroupItem>
         </ToggleGroup>
         
         {viewMode === 'day' ? (
@@ -45,7 +45,7 @@ export function DataTableToolbar<TData>({
           value={(table.getColumn("servicioClinico")?.getFilterValue() as string) ?? "all"}
           onValueChange={(value) => table.getColumn("servicioClinico")?.setFilterValue(value === "all" ? null : value)}
         >
-          <SelectTrigger className="h-9 w-full md:w-auto">
+          <SelectTrigger className="h-9 md:w-auto">
             <SelectValue placeholder="Filtrar por servicio" />
           </SelectTrigger>
           <SelectContent>

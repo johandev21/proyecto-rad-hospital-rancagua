@@ -10,30 +10,46 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
-export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0;
+export function DataTableToolbar<TData>({
+  table,
+}: DataTableToolbarProps<TData>) {
+  const isFiltered =
+    table.getState().columnFilters.length > 0 ||
+    !!table.getState().globalFilter;
+
+  const handleResetFilters = () => {
+    table.resetColumnFilters();
+    table.setGlobalFilter("");
+  };
 
   return (
-    <div className="flex items-center justify-between gap-2">
-      <div className="flex flex-1 items-center space-x-2">
+    <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap flex-1 items-center gap-2">
         <Input
           placeholder="Filtrar por carrera, servicio..."
           value={(table.getState().globalFilter as string) ?? ""}
           onChange={(event) => table.setGlobalFilter(event.target.value)}
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-9 flex-grow max-w-[320px] sm:min-w-[200px]"
         />
-        {/* Filtro por Institución */}
+
         <Select
-          value={(table.getColumn("institucion")?.getFilterValue() as string) ?? "all"}
-          onValueChange={value => table.getColumn("institucion")?.setFilterValue(value === "all" ? null : value)}
+          value={
+            (table.getColumn("institucion")?.getFilterValue() as string) ??
+            "all"
+          }
+          onValueChange={(value) =>
+            table
+              .getColumn("institucion")
+              ?.setFilterValue(value === "all" ? null : value)
+          }
         >
-          <SelectTrigger className="h-8 w-auto">
+          <SelectTrigger className="h-8 w-full sm:w-[180px]">
             <SelectValue placeholder="Institución" />
           </SelectTrigger>
           <SelectContent>
@@ -44,12 +60,17 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
           </SelectContent>
         </Select>
 
-        {/* Filtro por Estado */}
         <Select
-          value={(table.getColumn("status")?.getFilterValue() as string) ?? "all"}
-          onValueChange={value => table.getColumn("status")?.setFilterValue(value === "all" ? null : value)}
+          value={
+            (table.getColumn("status")?.getFilterValue() as string) ?? "all"
+          }
+          onValueChange={(value) =>
+            table
+              .getColumn("status")
+              ?.setFilterValue(value === "all" ? null : value)
+          }
         >
-          <SelectTrigger className="h-8 w-auto">
+          <SelectTrigger className="h-8 w-full sm:w-[180px]">
             <SelectValue placeholder="Estado" />
           </SelectTrigger>
           <SelectContent>
@@ -59,14 +80,14 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
             <SelectItem value="Rechazada">Rechazada</SelectItem>
           </SelectContent>
         </Select>
-        
+
         {isFiltered && (
           <Button
             variant="ghost"
-            onClick={() => table.resetColumnFilters()}
+            onClick={handleResetFilters}
             className="h-8 px-2 lg:px-3"
           >
-            Reset
+            Resetear
             <X className="ml-2 h-4 w-4" />
           </Button>
         )}

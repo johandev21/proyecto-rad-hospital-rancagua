@@ -50,7 +50,6 @@ export default async function DashboardPage() {
         </div>
       </div>
       
-      {/* Grid responsivo para las tarjetas y gráficos */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {data.kpi.map((item) => (
           <KpiCard key={item.title} {...item} />

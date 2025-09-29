@@ -12,33 +12,38 @@ interface DataTableToolbarProps<TData> {
 }
 
 export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const isFiltered = table.getState().columnFilters.length > 0 || (table.getState().globalFilter?.length ?? 0) > 0;
 
   return (
-    <div className="flex items-center justify-between gap-2">
-      <div className="flex flex-1 items-center space-x-2">
+    <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+      
+      <div className="flex w-full flex-1 items-center space-x-2">
         <Input
           placeholder="Filtrar por carrera, centro..."
           value={(table.getState().globalFilter as string) ?? ""}
           onChange={(event) => table.setGlobalFilter(event.target.value)}
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-8 w-full sm:w-[200px] lg:w-[250px]"
         />
         {isFiltered && (
           <Button
             variant="ghost"
-            onClick={() => table.resetColumnFilters()}
+            onClick={() => {
+                table.resetColumnFilters();
+                table.setGlobalFilter('');
+            }}
             className="h-8 px-2 lg:px-3"
           >
-            Reset
+            Resetear
             <X className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>
-      <div className="flex items-center space-x-2">
+      
+      <div className="flex w-full items-center justify-end space-x-2 md:w-auto">
         <ModalRegistrar />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
+            <Button variant="outline" size="sm" className="h-8">
               <SlidersHorizontal className="mr-2 h-4 w-4" />
               Vista
             </Button>

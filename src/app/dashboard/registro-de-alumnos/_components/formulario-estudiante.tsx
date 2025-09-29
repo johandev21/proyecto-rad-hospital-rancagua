@@ -25,8 +25,8 @@ export function FormularioEstudiante() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-2 gap-y-4 gap-x-2 md:gap-x-4 md:gap-y-6">
         <div className="space-y-2">
           <Label htmlFor="nombre">Nombre</Label>
           <Input id="nombre" name="nombre" placeholder="Ej: Karla Estrella" />

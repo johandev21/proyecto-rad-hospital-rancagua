@@ -21,11 +21,11 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex flex-1 items-center space-x-2">
+    <div className="flex flex-wrap gap-y-2 items-center justify-between">
+      <div className="flex flex-wrap gap-y-2 flex-1 items-center space-x-2">
         <Input
           placeholder="Buscar por nombre o correo..."
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-8 min-w-[350px] max-w-[400px]"
         />
         <Select>
           <SelectTrigger className="h-8 w-auto">

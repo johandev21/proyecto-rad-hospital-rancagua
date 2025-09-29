@@ -19,8 +19,8 @@ import { RetribucionReporte } from "./data";
 import { columns } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
-import { DataTablePagination } from "./pagination";
 import { Card, CardContent } from "@/components/ui/card";
+import { DataTablePagination } from "@/components/ui/pagination";
 
 interface DataTableProps {
   data: RetribucionReporte[];

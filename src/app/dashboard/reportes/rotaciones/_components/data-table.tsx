@@ -7,7 +7,7 @@ import { RotacionReporte } from "./data";
 import { columns } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
-import { DataTablePagination } from "./pagination";
+import { DataTablePagination } from "@/components/ui/pagination";
 
 interface DataTableProps {
   data: RotacionReporte[];

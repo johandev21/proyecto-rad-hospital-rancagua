@@ -18,12 +18,12 @@ export function ModalRegistrar() {
       
       <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Agregar Registro</DialogTitle>
+          <DialogTitle className="text-xl md:text-2xl">Agregar Registro</DialogTitle>
           <DialogDescription>
             Complete los siguientes campos para añadir un nuevo cupo.
           </DialogDescription>
         </DialogHeader>
-        <div className="py-4">
+        <div>
           <FormularioRegistrar />
         </div>
       </DialogContent>

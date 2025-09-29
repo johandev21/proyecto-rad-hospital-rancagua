@@ -14,7 +14,7 @@ export default function ProgramacionPage() {
     <div className="p-4 sm:p-6 md:p-8">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Programación de Rotaciones</CardTitle>
+          <CardTitle className="text-xl md:text-2xl font-bold">Programación de Rotaciones</CardTitle>
           <CardDescription>
             Gestiona, asigna y visualiza todas las rotaciones de estudiantes en los servicios clínicos.
           </CardDescription>

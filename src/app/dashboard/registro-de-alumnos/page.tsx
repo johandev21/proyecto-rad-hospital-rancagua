@@ -14,7 +14,7 @@ export default function RegistroAlumnosPage() {
     <div className="p-4 sm:p-6 md:p-8">
       <Card className="bg-card/80">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Registro de Alumnos</CardTitle>
+          <CardTitle className="text-xl md:text-2xl font-bold">Registro de Alumnos</CardTitle>
           <CardDescription>
             Busca, filtra y gestiona el registro de todos los alumnos.
           </CardDescription>

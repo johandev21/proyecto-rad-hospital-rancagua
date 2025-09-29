@@ -22,12 +22,12 @@ export function ModalAgregarEstudiante() {
       
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Añadir Nuevo Alumno</DialogTitle>
+          <DialogTitle className="text-xl md:text-2xl">Añadir Nuevo Alumno</DialogTitle>
           <DialogDescription>
             Rellene los campos para registrar un nuevo alumno en el sistema.
           </DialogDescription>
         </DialogHeader>
-        <div className="py-4">
+        <div>
           <FormularioEstudiante />
         </div>
       </DialogContent>

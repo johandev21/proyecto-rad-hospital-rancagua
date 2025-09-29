@@ -14,7 +14,9 @@ export default function CapacidadFormadoraPage() {
     <div className="p-4 sm:p-6 md:p-8">
       <Card className="bg-card/80">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Capacidad Formadora</CardTitle>
+          <CardTitle className="text-2xl font-bold">
+            Capacidad Formadora
+          </CardTitle>
           <CardDescription>
             Gestiona y visualiza los cupos disponibles por centro formador.
           </CardDescription>

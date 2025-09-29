@@ -82,7 +82,7 @@ const items = [
 export function DashboardSidebar() {
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="backdrop-blur-2xl">
         <SidebarGroup>
           <SidebarGroupContent>
             <Image

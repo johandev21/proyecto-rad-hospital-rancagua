@@ -36,8 +36,8 @@ export function FormularioRegistrar() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <form onSubmit={handleSubmit} className="space-y-2 md:space-y-6">
+      <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="servicio">Servicio</Label>
           <Input id="servicio" placeholder="Ej: Medicina" />

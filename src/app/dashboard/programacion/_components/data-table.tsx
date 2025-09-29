@@ -22,9 +22,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { DataTablePagination } from "./pagination";
 import { Rotacion } from "./data";
 import { DataTableToolbar } from "./toobar";
+import { DataTablePagination } from "@/components/ui/pagination";
 
 const alumnoFilterFn = (row: any, columnId: string, filterValue: string) => {
   const alumno = row.original.alumno as Rotacion["alumno"];

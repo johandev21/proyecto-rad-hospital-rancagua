@@ -11,19 +11,20 @@ interface DataTableToolbarProps<TData> {
 
 export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex flex-1 items-center space-x-2">
+    <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+      
+      <div className="flex w-full md:w-xl flex-col items-center gap-2 sm:flex-row sm:gap-2">
         <Input
           placeholder="Filtrar por alumno o servicio..."
           value={(table.getColumn("alumno")?.getFilterValue() as string) ?? ""}
           onChange={(event) => table.getColumn("alumno")?.setFilterValue(event.target.value)}
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-9 w-full flex-1"
         />
         <Select
           value={(table.getColumn("estado")?.getFilterValue() as string) ?? "all"}
           onValueChange={value => table.getColumn("estado")?.setFilterValue(value === "all" ? null : value)}
         >
-          <SelectTrigger className="h-8 w-auto">
+          <SelectTrigger className="h-9 w-full sm:w-[180px]">
             <SelectValue placeholder="Filtrar por estado" />
           </SelectTrigger>
           <SelectContent>
@@ -34,7 +35,11 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
           </SelectContent>
         </Select>
       </div>
-      <AddRotationModal />
+      
+      <div className="w-full md:w-auto">
+        <AddRotationModal />
+      </div>
+
     </div>
   );
 }

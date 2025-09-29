@@ -16,7 +16,7 @@ interface ToolbarProps {
 
 export function Toolbar({ view, onViewChange, searchTerm, onSearchChange }: ToolbarProps) {
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex flex-wrap gap-y-2 items-center justify-between gap-4">
       <Input
         placeholder="Buscar documentos..."
         value={searchTerm}
@@ -29,6 +29,7 @@ export function Toolbar({ view, onViewChange, searchTerm, onSearchChange }: Tool
           value={view} 
           onValueChange={onViewChange}
           size="sm"
+          className="border"
         >
           <ToggleGroupItem value="list" aria-label="Vista de lista"><List className="h-4 w-4" /></ToggleGroupItem>
           <ToggleGroupItem value="grid" aria-label="Vista de cuadrícula"><Grid className="h-4 w-4" /></ToggleGroupItem>
