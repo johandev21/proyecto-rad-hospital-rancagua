@@ -29,8 +29,8 @@ export const data: Usuario[] = [
   },
   {
     id: "USR-002",
-    nombre: "Luciano Aweonao",
-    correo: "luciano.aweonao@uoh.cl",
+    nombre: "Banjamin Gonzales",
+    correo: "benjamin.gonzales@uoh.cl",
     rol: "Docente",
     estado: "Activo",
     fechaCreacion: "2024-02-20",

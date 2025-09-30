@@ -51,6 +51,7 @@ export function Toolbar({ categorias }: ToolbarProps) {
           value={view}
           onValueChange={handleViewChange}
           size="sm"
+          className="border"
         >
           <ToggleGroupItem value="list">
             <List className="h-4 w-4" />
