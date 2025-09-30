@@ -1,31 +1,42 @@
 "use client";
 
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface CategorySidebarProps {
   categories: string[];
-  selectedCategory: string;
-  onSelectCategory: (category: string) => void;
-  className?: string;
 }
 
-export function CategorySidebar({ categories, selectedCategory, onSelectCategory, className }: CategorySidebarProps) {
+export function CategorySidebar({ categories }: CategorySidebarProps) {
+  const searchParams = useSearchParams();
+  const selectedCategory = searchParams.get("category") || "Todos";
+
   return (
-    <nav className={cn("flex flex-col space-y-1", className)}>
-      {categories.map((category) => (
-        <Button
-          key={category}
-          variant="ghost"
-          className={cn(
-            "w-full justify-start",
-            selectedCategory === category && "bg-muted hover:bg-muted"
-          )}
-          onClick={() => onSelectCategory(category)}
-        >
-          {category}
-        </Button>
-      ))}
-    </nav>
+    <Card>
+      <CardContent>
+        <nav className="flex flex-col space-y-1">
+          {categories.map((category) => (
+            <Link
+              key={category}
+              href={
+                category === "Todos"
+                  ? "/dashboard/documentos"
+                  : `?category=${category}`
+              }
+              className={cn(
+                buttonVariants({ variant: "ghost" }),
+                "w-full justify-start",
+                selectedCategory === category && "bg-muted hover:bg-muted"
+              )}
+            >
+              {category}
+            </Link>
+          ))}
+        </nav>
+      </CardContent>
+    </Card>
   );
 }

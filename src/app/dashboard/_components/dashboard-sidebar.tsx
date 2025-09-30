@@ -14,17 +14,33 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
-import Image from "next/image";
-import logo from "../../../../public/logo.svg";
 import Link from "next/link";
+import { NavUser } from "./nav-user";
+import Logo from "./logo";
+
+interface User {
+  name: string;
+  email: string;
+  avatar: string;
+}
+
+const data: User[] = [
+  {
+    name: "admin",
+    email: "admin@example.com",
+    avatar: "/avatars/admin.jpg",
+  }
+];
 
 const items = [
   {
@@ -81,17 +97,11 @@ const items = [
 
 export function DashboardSidebar() {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarContent className="backdrop-blur-2xl">
         <SidebarGroup>
           <SidebarGroupContent>
-            <Image
-              src={logo}
-              alt="Logo institucional"
-              className="m-2 mb-4 dark:grayscale dark:invert"
-              width={177}
-              height={51}
-            />
+            <Logo />
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
@@ -107,6 +117,9 @@ export function DashboardSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data[0]} />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

@@ -1,20 +1,30 @@
-"use client";
-
-import * as React from "react";
 import { CategorySidebar } from "./_components/category-sidebar";
 import { DocumentBrowser } from "./_components/document-browser";
 import { data, categorias } from "./_components/data";
 import { Card, CardContent } from "@/components/ui/card";
+import { Toolbar } from "./_components/toolbar";
 
-export default function DocumentosPage() {
-  const [selectedCategory, setSelectedCategory] = React.useState("Todos");
+export default async function DocumentosPage({
+  searchParams,
+}: {
+  searchParams?: {
+    category?: string;
+    q?: string;
+    view?: "list" | "grid";
+  };
+}) {
+  const selectedCategory = searchParams?.category || "Todos";
+  const searchTerm = searchParams?.q || "";
+  const view = searchParams?.view || "grid";
 
-  const filteredDocuments = React.useMemo(() => {
-    if (selectedCategory === "Todos") {
-      return data;
-    }
-    return data.filter((doc) => doc.categoria === selectedCategory);
-  }, [selectedCategory]);
+  const filteredDocuments = data.filter((doc) => {
+    const categoryMatch =
+      selectedCategory === "Todos" || doc.categoria === selectedCategory;
+    const searchMatch = doc.nombre
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return categoryMatch && searchMatch;
+  });
 
   return (
     <div className="p-4 sm:p-6 md:p-8">
@@ -23,29 +33,17 @@ export default function DocumentosPage() {
           Gestión Documental
         </h1>
         <p className="text-muted-foreground">
-          Encuentre, organice y gestione todos los protocolos y documentos
-          institucionales.
+          Encuentre, organice y gestione todos los protocolos institucionales.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8">
         <aside>
           <h2 className="text-lg font-semibold mb-2 px-2">Categorías</h2>
-          <Card>
-            <CardContent>
-              <CategorySidebar
-                categories={categorias}
-                selectedCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
-              />
-            </CardContent>
-          </Card>
+          <CategorySidebar categories={categorias} />
         </aside>
-        <main>
-          <Card>
-            <CardContent>
-              <DocumentBrowser documentos={filteredDocuments} />
-            </CardContent>
-          </Card>
+        <main className="space-y-4">
+          <Toolbar />
+          <DocumentBrowser documentos={filteredDocuments} view={view} />
         </main>
       </div>
     </div>

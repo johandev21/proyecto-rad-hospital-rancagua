@@ -20,6 +20,7 @@ import {
 import { DataTableToolbar } from "./toolbar";
 import { Asistencia } from "./data";
 import { DateRange } from "react-day-picker";
+import { DataTablePagination } from "@/components/ui/pagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

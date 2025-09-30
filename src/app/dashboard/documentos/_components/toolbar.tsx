@@ -1,45 +1,51 @@
 "use client";
 
+import * as React from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { List, Grid } from "lucide-react";
-import { UploadDocumentModal } from "./upload-document-modal";
-import { categorias } from "./data";
-import { Button } from "@/components/ui/button";
+import { List, Grid, Upload } from "lucide-react";
 
-interface ToolbarProps {
-  view: "list" | "grid";
-  onViewChange: (view: "list" | "grid") => void;
-  searchTerm: string;
-  onSearchChange: (term: string) => void;
-}
+export function Toolbar() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  
+  const view = searchParams.get("view") || "grid";
 
-export function Toolbar({ view, onViewChange, searchTerm, onSearchChange }: ToolbarProps) {
+  const handleViewChange = (newView: "list" | "grid") => {
+    if (!newView) return;
+    const params = new URLSearchParams(searchParams);
+    params.set("view", newView);
+    replace(`${pathname}?${params.toString()}`);
+  };
+
+  const handleSearch = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("q", term);
+    } else {
+      params.delete("q");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, 300);
+
   return (
-    <div className="flex flex-wrap gap-y-2 items-center justify-between gap-4">
+    <div className="flex items-center justify-between gap-4">
       <Input
         placeholder="Buscar documentos..."
-        value={searchTerm}
-        onChange={(e) => onSearchChange(e.target.value)}
+        defaultValue={searchParams.get("q") || ""}
+        onChange={(e) => handleSearch(e.target.value)}
         className="h-9 max-w-sm"
       />
       <div className="flex items-center gap-2">
-        <ToggleGroup 
-          type="single" 
-          value={view} 
-          onValueChange={onViewChange}
-          size="sm"
-          className="border"
-        >
-          <ToggleGroupItem value="list" aria-label="Vista de lista"><List className="h-4 w-4" /></ToggleGroupItem>
-          <ToggleGroupItem value="grid" aria-label="Vista de cuadrícula"><Grid className="h-4 w-4" /></ToggleGroupItem>
+        <ToggleGroup className="border" type="single" value={view} onValueChange={handleViewChange} size="sm">
+          <ToggleGroupItem value="list"><List className="h-4 w-4" /></ToggleGroupItem>
+          <ToggleGroupItem value="grid"><Grid className="h-4 w-4" /></ToggleGroupItem>
         </ToggleGroup>
-        
-        <UploadDocumentModal categorias={categorias}>
-          <Button size="sm" className="h-9">
-            Subir Documento
-          </Button>
-        </UploadDocumentModal>
+        <Button size="sm" className="h-9"><Upload className="mr-2 h-4 w-4" />Subir</Button>
       </div>
     </div>
   );
