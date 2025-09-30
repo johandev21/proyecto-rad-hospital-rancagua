@@ -16,7 +16,7 @@ export function CategorySidebar({ categories }: CategorySidebarProps) {
 
   return (
     <Card>
-      <CardContent>
+      <CardContent className="px-3">
         <nav className="flex flex-col space-y-1">
           {categories.map((category) => (
             <Link

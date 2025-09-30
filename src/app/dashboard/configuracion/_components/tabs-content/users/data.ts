@@ -21,16 +21,16 @@ export type Usuario = {
 export const data: Usuario[] = [
   {
     id: "USR-001",
-    nombre: "Pedro Rojas Piña",
-    correo: "pedro.rojas@uoh.cl",
+    nombre: "Camilo Rojas Figueroa",
+    correo: "camilo.rojas@uoh.cl",
     rol: "Administrador",
     estado: "Activo",
     fechaCreacion: "2024-01-15",
   },
   {
     id: "USR-002",
-    nombre: "Johan Carrasco Poblete",
-    correo: "johan.carrasco@uoh.cl",
+    nombre: "Luciano Aweonao",
+    correo: "luciano.aweonao@uoh.cl",
     rol: "Docente",
     estado: "Activo",
     fechaCreacion: "2024-02-20",

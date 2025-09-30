@@ -1,126 +1,140 @@
-import { useId } from "react";
-import { SearchIcon } from "lucide-react";
+"use client";
+
+import { useId, useState, useEffect } from "react";
+import {
+  SearchIcon,
+  Home,
+  Calendar,
+  FilePlus,
+  Settings,
+  Users,
+  BookOpen,
+  ClipboardList,
+  Coins,
+  FileText,
+  BarChart2,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import NotificationMenu from "@/components/notification-menu";
 import UserMenu from "@/components/user-menu";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { SidebarTrigger } from "../../../components/ui/sidebar";
+import { Popover } from "@/components/ui/popover";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ModeToggle } from "@/components/mode-toggler";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 
-const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
+const navigationItems = [
+  { title: "Inicio", url: "/dashboard", icon: Home },
+  {
+    title: "Capacidad Formadora",
+    url: "/dashboard/capacidad-formadora",
+    icon: Users,
+  },
+  {
+    title: "Solicitud de Cupos",
+    url: "/dashboard/solicitud-de-cupos",
+    icon: FilePlus,
+  },
+  { title: "Programación", url: "/dashboard/programacion", icon: Calendar },
+  {
+    title: "Registro de Alumnos",
+    url: "/dashboard/registro-de-alumnos",
+    icon: BookOpen,
+  },
+  { title: "Asistencia", url: "/dashboard/asistencia", icon: ClipboardList },
+  { title: "Retribuciones", url: "/dashboard/retribuciones", icon: Coins },
+  { title: "Documentos", url: "/dashboard/documentos", icon: FileText },
+  { title: "Reportes", url: "/dashboard/reportes", icon: BarChart2 },
+  { title: "Configuración", url: "/dashboard/configuracion", icon: Settings },
 ];
 
 export default function DashboardHeader() {
   const id = useId();
+  const [commandMenuOpen, setCommandMenuOpen] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setCommandMenuOpen((open) => !open);
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
+  const runCommand = (url: string) => {
+    setCommandMenuOpen(false);
+    router.push(url);
+  };
 
   return (
-    <header className="border-b bg-header px-4 md:px-6 sticky inset-0 z-50 backdrop-blur-lg">
-      <div className="flex h-16 items-center justify-between gap-4">
-        {/* Left side */}
-        <div className="flex flex-1 items-center gap-2">
-          {/* Mobile menu trigger */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                className="group size-8 md:hidden"
-                variant="ghost"
-                size="icon"
+    <>
+      <header className="border-b bg-header px-4 md:px-6 sticky inset-0 z-50 backdrop-blur-lg">
+        <div className="flex h-16 items-center justify-between gap-4">
+          <div className="flex flex-1 items-center gap-2">
+            <Popover></Popover>
+            <div className="flex items-center">
+              <SidebarTrigger />
+            </div>
+          </div>
+
+          <div className="grow">
+            <div className="relative mx-auto w-full max-w-xs">
+              <Input
+                id={id}
+                className="peer h-8 ps-8 pe-10 text-xs md:text-sm"
+                placeholder="Buscar Módulos o Acciones..."
+                type="search"
+                onFocus={() => setCommandMenuOpen(true)}
+              />
+              <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-2 peer-disabled:opacity-50">
+                <SearchIcon size={16} />
+              </div>
+              <div className="text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-2">
+                <kbd className="text-muted-foreground/70 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+                  ⌘K
+                </kbd>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-1 items-center justify-end gap-2">
+            <ModeToggle />
+            <NotificationMenu />
+            <UserMenu />
+          </div>
+        </div>
+      </header>
+
+      <CommandDialog open={commandMenuOpen} onOpenChange={setCommandMenuOpen}>
+        <CommandInput placeholder="Escriba un módulo o acción..." />
+        <CommandList>
+          <CommandEmpty>No se encontraron módulos o acciones.</CommandEmpty>
+
+          <CommandGroup heading="Navegación Rápida">
+            {navigationItems.map((item) => (
+              <CommandItem
+                key={item.url}
+                value={item.title}
+                onSelect={() => runCommand(item.url)}
               >
-                <svg
-                  className="pointer-events-none"
-                  width={16}
-                  height={16}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4 12L20 12"
-                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
-                  />
-                  <path
-                    d="M4 12H20"
-                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
-                  />
-                  <path
-                    d="M4 12H20"
-                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
-                  />
-                </svg>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align="start" className="w-36 p-1 md:hidden">
-              <NavigationMenu className="max-w-none *:w-full">
-                <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-                  {navigationLinks.map((link, index) => (
-                    <NavigationMenuItem key={index} className="w-full">
-                      <NavigationMenuLink
-                        href={link.href}
-                        className="py-1.5"
-                        active={link.active}
-                      >
-                        {link.label}
-                      </NavigationMenuLink>
-                    </NavigationMenuItem>
-                  ))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </PopoverContent>
-          </Popover>
-          {/* Logo */}
-          <div className="flex items-center">
-            <SidebarTrigger />
-          </div>
-        </div>
-        {/* Middle area */}
-        <div className="grow">
-          {/* Search form */}
-          <div className="relative mx-auto w-full max-w-xs">
-            <Input
-              id={id}
-              className="peer h-8 ps-8 pe-10"
-              placeholder="Search..."
-              type="search"
-            />
-            <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-2 peer-disabled:opacity-50">
-              <SearchIcon size={16} />
-            </div>
-            <div className="text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-2">
-              <kbd className="text-muted-foreground/70 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-                ⌘K
-              </kbd>
-            </div>
-          </div>
-        </div>
-        {/* Right side */}
-        <div className="flex flex-1 items-center justify-end gap-2">
-          <ModeToggle />
-          {/* Notification */}
-          <NotificationMenu />
-          {/* User menu */}
-          <UserMenu />
-        </div>
-      </div>
-    </header>
+                <item.icon className="mr-2 h-4 w-4" />
+                <span>{item.title}</span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
+    </>
   );
 }

@@ -14,8 +14,8 @@ export default function LogoHospital() {
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center transition-all duration-300 ease-in-out",
-        isExpanded ? "h-[51px] w-[177px] mb-4" : "h-[40px] w-[40px] mb-2"
+        "relative flex items-center justify-center transition-all duration-300 ease-in-out mb-4",
+        isExpanded ? "h-[51px] w-[177px]" : "h-[40px] w-[40px]"
       )}
     >
       <Image

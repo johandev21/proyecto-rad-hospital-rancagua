@@ -1,7 +1,6 @@
 import { CategorySidebar } from "./_components/category-sidebar";
 import { DocumentBrowser } from "./_components/document-browser";
 import { data, categorias } from "./_components/data";
-import { Card, CardContent } from "@/components/ui/card";
 import { Toolbar } from "./_components/toolbar";
 
 export default async function DocumentosPage({
@@ -42,7 +41,7 @@ export default async function DocumentosPage({
           <CategorySidebar categories={categorias} />
         </aside>
         <main className="space-y-4">
-          <Toolbar />
+          <Toolbar categorias={categorias} />
           <DocumentBrowser documentos={filteredDocuments} view={view} />
         </main>
       </div>

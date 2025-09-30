@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Pie, PieChart } from "recharts";
+import { Pie, PieChart, Cell } from "recharts";
 import {
   Card,
   CardContent,
@@ -41,7 +41,7 @@ export function RetributionsChart({ data }: RetributionsChartProps) {
     aggregatedData.forEach((item, index) => {
       config[item.institucion] = {
         label: item.institucion,
-        color: `hsl(var(--chart-${index + 1}))`,
+        color: `var(--chart-${(index % 5) + 1})`,
       };
     });
     return config;
@@ -76,7 +76,15 @@ export function RetributionsChart({ data }: RetributionsChartProps) {
               nameKey="institucion"
               innerRadius={60}
               strokeWidth={5}
-            />
+              stroke="var(--card)"
+            >
+              {aggregatedData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={chartConfig[entry.institucion]?.color}
+                />
+              ))}
+            </Pie>
           </PieChart>
         </ChartContainer>
       </CardContent>

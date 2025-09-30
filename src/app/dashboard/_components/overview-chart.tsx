@@ -18,41 +18,41 @@ import {
 } from "@/components/ui/chart";
 
 const chartData = [
-  { service: "Medicina", students: 28, fill: "var(--color-medicina)" },
-  { service: "Cirugía", students: 22, fill: "var(--color-cirugia)" },
-  { service: "Pediatría", students: 18, fill: "var(--color-pediatria)" },
-  { service: "Ginecología", students: 25, fill: "var(--color-ginecologia)" },
-  { service: "Urgencias", students: 31, fill: "var(--color-urgencias)" },
-  { service: "Puerperio", students: 15, fill: "var(--color-puerperio)" },
+  { service: "Medicina", students: 28, fill: "var(--chart-1)" },
+  { service: "Cirugía", students: 22, fill: "var(--chart-2)" },
+  { service: "Pediatría", students: 18, fill: "var(--chart-3)" },
+  { service: "Ginecología", students: 25, fill: "var(--chart-4)" },
+  { service: "Urgencias", students: 31, fill: "var(--chart-5)" },
+  { service: "Puerperio", students: 15, fill: "var(--chart-1)" },
 ];
 
 const chartConfig = {
   students: {
     label: "Alumnos",
   },
-  medicina: {
+  Medicina: {
     label: "Medicina",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
-  cirugia: {
+  Cirugía: {
     label: "Cirugía",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
-  pediatria: {
+  Pediatría: {
     label: "Pediatría",
-    color: "hsl(var(--chart-3))",
+    color: "var(--chart-3)",
   },
-  ginecologia: {
+  Ginecología: {
     label: "Ginecología",
-    color: "hsl(var(--chart-4))",
+    color: "var(--chart-4)",
   },
-  urgencias: {
+  Urgencias: {
     label: "Urgencias",
-    color: "hsl(var(--chart-5))",
+    color: "var(--chart-5)",
   },
-  puerperio: {
+  Puerperio: {
     label: "Puerperio",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 
@@ -61,7 +61,9 @@ export function OverviewChart() {
     <Card>
       <CardHeader>
         <CardTitle>Ocupación de Servicios Clínicos</CardTitle>
-        <CardDescription>Alumnos actualmente en rotación por servicio.</CardDescription>
+        <CardDescription>
+          Alumnos actualmente en rotación por servicio.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-[300px] w-full">
@@ -72,7 +74,7 @@ export function OverviewChart() {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value: any) => value.slice(0, 3)} 
+              tickFormatter={(value: string) => value.slice(0, 3)}
             />
             <YAxis />
             <ChartTooltip
@@ -80,9 +82,9 @@ export function OverviewChart() {
               content={<ChartTooltipContent indicator="dot" />}
             />
             <Bar dataKey="students" radius={4}>
-                {chartData.map((entry) => (
-                    <Cell key={entry.service} fill={entry.fill} />
-                ))}
+              {chartData.map((entry) => (
+                <Cell key={entry.service} fill={entry.fill} />
+              ))}
             </Bar>
           </BarChart>
         </ChartContainer>
