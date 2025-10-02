@@ -17,7 +17,6 @@ import {
 import { useRouter } from "next/navigation";
 
 import NotificationMenu from "@/components/notification-menu";
-import UserMenu from "@/components/user-menu";
 import { Input } from "@/components/ui/input";
 import { Popover } from "@/components/ui/popover";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -92,7 +91,7 @@ export default function DashboardHeader() {
             <div className="relative mx-auto w-full max-w-xs">
               <Input
                 id={id}
-                className="peer h-8 ps-8 pe-10 text-xs md:text-sm"
+                className="peer h-8 ps-8 pe-10 text-xs md:text-sm border-foreground/30"
                 placeholder="Buscar Módulos o Acciones..."
                 type="search"
                 onFocus={() => setCommandMenuOpen(true)}
@@ -111,7 +110,6 @@ export default function DashboardHeader() {
           <div className="flex flex-1 items-center justify-end gap-2">
             <ModeToggle />
             <NotificationMenu />
-            <UserMenu />
           </div>
         </div>
       </header>

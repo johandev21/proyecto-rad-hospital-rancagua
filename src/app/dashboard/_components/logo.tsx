@@ -6,13 +6,15 @@ import logo from "../../../../public/logo.svg";
 import logoCollapsed from "../../../../public/logo-collapsed.png";
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function LogoHospital() {
   const { state } = useSidebar();
   const isExpanded = state === "expanded";
 
   return (
-    <div
+    <Link
+    href="/dashboard"
       className={cn(
         "relative flex items-center justify-center transition-all duration-300 ease-in-out mb-4",
         isExpanded ? "h-[51px] w-[177px]" : "h-[40px] w-[40px]"
@@ -45,6 +47,6 @@ export default function LogoHospital() {
           objectFit: "contain",
         }}
       />
-    </div>
+    </Link>
   );
 }

@@ -38,12 +38,12 @@ export function Toolbar({ categorias }: ToolbarProps) {
   }, 300);
 
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex items-center justify-between gap-4 mt-9">
       <Input
         placeholder="Buscar documentos..."
         defaultValue={searchParams.get("q") || ""}
         onChange={(e) => handleSearch(e.target.value)}
-        className="h-9 max-w-sm"
+        className="h-9 max-w-sm bg-card border-border"
       />
       <div className="flex items-center gap-2">
         <ToggleGroup
