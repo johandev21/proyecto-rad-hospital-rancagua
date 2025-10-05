@@ -5,24 +5,54 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { SolicitudesDataTable } from "./_components/data-table";
-import { columns } from "./_components/columns";
-import { data } from "./_components/data";
+import { columns } from "./_components/centro-formador/columns";
+import { data } from "./_components/centro-formador/data";
+import { DataTable } from "./_components/centro-formador/data-table";
+import { SolicitudesDataTable } from "./_components/rad/data-table";
 
-export default function SolicitudDeCuposRoute() {
+async function getUserRole() {
+  return "CentroFormador";
+}
+
+function ViewCentroFormador() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Mis Solicitudes de Cupos</CardTitle>
+        <CardDescription>
+          Cree, gestione y haga seguimiento de todas sus solicitudes de cupos.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <DataTable columns={columns} data={data} />
+      </CardContent>
+    </Card>
+  );
+}
+
+function ViewRAD() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Gestionar Solicitudes de Cupos</CardTitle>
+        <CardDescription>
+          Revise, apruebe o rechace las solicitudes de los centros formadores.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <SolicitudesDataTable columns={columns} data={data} />
+      </CardContent>
+    </Card>
+  );
+}
+
+export default async function SolicitudDeCuposPage() {
+  const userRole = await getUserRole();
+
   return (
     <div className="p-4 sm:p-6 md:p-8">
-      <Card className="bg-card/80">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Solicitud de Cupos</CardTitle>
-          <CardDescription>
-            Gestiona las solicitudes de cupos de las distintas instituciones.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <SolicitudesDataTable columns={columns} data={data} />
-        </CardContent>
-      </Card>
+      {userRole === "CentroFormador" && <ViewCentroFormador />}
+      {userRole === "RAD" && <ViewRAD />}
     </div>
   );
 }

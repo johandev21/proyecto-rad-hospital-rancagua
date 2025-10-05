@@ -95,7 +95,7 @@ const items = [
   },
 ];
 
-export function DashboardSidebar() {
+export function DashboardSidebarRAD() {
   return (
     <Sidebar collapsible="icon">
       <SidebarContent className="backdrop-blur-2xl">

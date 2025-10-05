@@ -91,7 +91,7 @@ export default function DashboardHeader() {
             <div className="relative mx-auto w-full max-w-xs">
               <Input
                 id={id}
-                className="peer h-8 ps-8 pe-10 text-xs md:text-sm border-foreground/30"
+                className="peer h-8 ps-8 pe-10 text-xs md:text-sm border-none bg-card"
                 placeholder="Buscar Módulos o Acciones..."
                 type="search"
                 onFocus={() => setCommandMenuOpen(true)}
