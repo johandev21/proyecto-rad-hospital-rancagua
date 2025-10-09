@@ -77,7 +77,7 @@ export function GeneralSettingsForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <Card>
+        <Card className="dark:bg-[#131313]">
           <CardHeader>
             <CardTitle>Parámetros Financieros</CardTitle>
             <CardDescription>
@@ -158,7 +158,7 @@ export function GeneralSettingsForm() {
         </Card>
 
         {/* Sección de Parámetros Académicos */}
-        <Card>
+        <Card className="dark:bg-[#131313]">
           <CardHeader>
             <CardTitle>Parámetros Académicos</CardTitle>
             <CardDescription>
