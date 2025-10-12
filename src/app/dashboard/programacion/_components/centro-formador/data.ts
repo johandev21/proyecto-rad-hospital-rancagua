@@ -1,4 +1,3 @@
-// Define el tipo de dato para cada rotación
 export type Rotacion = {
   id: string;
   alumno: {
@@ -13,7 +12,6 @@ export type Rotacion = {
   estado: "Programada" | "En Curso" | "Finalizada";
 };
 
-// Array con los datos de ejemplo que se mostrarán en la tabla
 export const data: Rotacion[] = [
   {
     id: "ROT-001",
