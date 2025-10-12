@@ -17,7 +17,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export function ConfigurationTabs() {
   return (
     <Tabs defaultValue="users" className="w-full">
-      <TabsList className="grid w-full grid-cols-3 h-full">
+      <TabsList className="max-w-[720px] w-full">
         
         <TabsTrigger value="users">
           <Users className="size-4 sm:mr-2" />

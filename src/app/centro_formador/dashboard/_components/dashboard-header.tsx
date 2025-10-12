@@ -33,28 +33,18 @@ import { Kbd } from "@/components/ui/kbd";
 import { InputGroupAddon } from "@/components/ui/input-group";
 
 const navigationItems = [
-  { title: "Inicio", url: "/dashboard", icon: Home },
-  {
-    title: "Capacidad Formadora",
-    url: "/dashboard/capacidad-formadora",
-    icon: Users,
-  },
+  { title: "Inicio", url: "/centro_formador/dashboard", icon: Home },
   {
     title: "Solicitud de Cupos",
-    url: "/dashboard/solicitud-de-cupos",
+    url: "/centro_formador/dashboard/solicitud-de-cupos",
     icon: FilePlus,
   },
-  { title: "Programación", url: "/dashboard/programacion", icon: Calendar },
   {
-    title: "Registro de Alumnos",
-    url: "/dashboard/registro-de-alumnos",
+    title: "Nomina de Alumnos",
+    url: "/centro_formador/dashboard/nomina-de-alumnos",
     icon: BookOpen,
   },
-  { title: "Asistencia", url: "/dashboard/asistencia", icon: ClipboardList },
-  { title: "Retribuciones", url: "/dashboard/retribuciones", icon: Coins },
-  { title: "Documentos", url: "/dashboard/documentos", icon: FileText },
-  { title: "Reportes", url: "/dashboard/reportes", icon: BarChart2 },
-  { title: "Configuración", url: "/dashboard/configuracion", icon: Settings },
+  { title: "Documentos", url: "/centro_formador/dashboard/documentos", icon: FileText },
 ];
 
 export default function DashboardHeader() {
