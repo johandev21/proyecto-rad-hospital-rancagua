@@ -1,6 +1,6 @@
+import { Activity, CircleDollarSign, ClipboardList, Users } from "lucide-react";
 import { KpiCard } from "./kpi-card";
 import { OverviewChart } from "./overview-chart";
-import { Activity, CircleDollarSign, ClipboardList, Users } from "lucide-react";
 import { RotacionesRecientes } from "./rotaciones-recientes";
 
 const kpiData = [
