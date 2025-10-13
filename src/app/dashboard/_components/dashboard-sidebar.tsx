@@ -107,7 +107,7 @@ const items: Item[] = [
   },
 ];
 
-export function DashboardSidebarRAD() {
+export function DashboardSidebar() {
   return (
     <TooltipProviderWrapper>
       <Sidebar collapsible="icon">
