@@ -15,33 +15,31 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// Define the expected structure of a row from the Excel file
-interface CapacidadRow {
-  Servicio: string;
-  Carrera: string;
-  "Nivel de Formacion": string;
-  "Tipo de Practica": "Curricular" | "Internado";
-  "Centro Formador": string;
-  "Año de Formacion": string;
-  "Tipo de Jornada": "AM - PM" | "Diurno" | "Cuarto Turno";
-  "N° de Cupos": number;
+interface AlumnoRow {
+  Nombre: string;
+  "Primer Apellido": string;
+  "Segundo Apellido": string;
+  RUT: string;
+  "Correo Electronico": string;
+  Telefono: string;
+  "Nombre Contacto Emergencia": string;
+  "Telefono Contacto Emergencia": string;
 }
 
-// These must match the Excel column headers exactly
 const requiredColumns = [
-  "Servicio",
-  "Carrera",
-  "Nivel de Formacion",
-  "Tipo de Practica",
-  "Centro Formador",
-  "Año de Formacion",
-  "Tipo de Jornada",
-  "N° de Cupos",
+  "Nombre",
+  "Primer Apellido",
+  "Segundo Apellido",
+  "RUT",
+  "Correo Electronico",
+  "Telefono",
+  "Nombre Contacto Emergencia",
+  "Telefono Contacto Emergencia",
 ];
 
-export function FormularioRegistrarMultiple() {
+export function FormularioMultipleEstudiantes() {
   const [file, setFile] = useState<File | null>(null);
-  const [data, setData] = useState<CapacidadRow[]>([]);
+  const [data, setData] = useState<AlumnoRow[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const handleFileUpload = (acceptedFiles: File[]) => {
@@ -62,7 +60,6 @@ export function FormularioRegistrarMultiple() {
           const sheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[sheetName];
 
-          // Validate headers
           const headers = XLSX.utils.sheet_to_json(worksheet, {
             header: 1,
           })[0] as string[];
@@ -78,7 +75,7 @@ export function FormularioRegistrarMultiple() {
             );
           }
 
-          const jsonData = XLSX.utils.sheet_to_json<CapacidadRow>(worksheet);
+          const jsonData = XLSX.utils.sheet_to_json<AlumnoRow>(worksheet);
 
           if (jsonData.length === 0) {
             throw new Error("El archivo Excel está vacío o no contiene datos.");
@@ -119,10 +116,10 @@ export function FormularioRegistrarMultiple() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (data.length > 0) {
-      console.log("Datos a enviar:", data);
+      console.log("Datos de alumnos a enviar:", data);
       // NOTE: Replace console.log with your API call to save the data
       alert(
-        `${data.length} registros han sido procesados exitosamente (revisa la consola para ver los datos).`
+        `${data.length} alumnos han sido procesados exitosamente (revisa la consola para ver los datos).`
       );
       handleRemoveFile();
     } else {
@@ -133,22 +130,23 @@ export function FormularioRegistrarMultiple() {
   const handleDownloadTemplate = () => {
     const ws = XLSX.utils.json_to_sheet([{}], { header: requiredColumns });
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Plantilla");
-    XLSX.writeFile(wb, "plantilla_capacidad_formadora.xlsx");
+    XLSX.utils.book_append_sheet(wb, ws, "Plantilla Alumnos");
+    XLSX.writeFile(wb, "plantilla_nomina_alumnos.xlsx");
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
-        <p className="text-sm text-muted-foreground">
-          Sube un archivo Excel (.xlsx, .xls) con los registros. Las columnas
-          deben coincidir exactamente con los campos del formulario.
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p className="text-sm text-muted-foreground max-w-md">
+          Sube un archivo Excel (.xlsx, .xls) con la nómina de alumnos. Las
+          columnas deben coincidir con la plantilla.
         </p>
         <Button
           type="button"
           variant="outline"
           size="sm"
           onClick={handleDownloadTemplate}
+          className="flex-shrink-0"
         >
           <Download className="mr-2 h-4 w-4" />
           Descargar Plantilla
@@ -192,43 +190,64 @@ export function FormularioRegistrarMultiple() {
       )}
 
       {data.length > 0 && (
-        <div className="rounded-md border max-h-60 overflow-y-auto">
-          <Table noWrapper>
-            <TableHeader className="bg-background sticky top-0 z-10">
-              <TableRow>
-                {requiredColumns.map((col) => (
-                  <TableHead
-                    key={col}
-                    className="sticky top-0 z-10 bg-background"
-                  >
-                    {col}
-                  </TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.slice(0, 10).map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>{row.Servicio}</TableCell>
-                  <TableCell>{row.Carrera}</TableCell>
-                  <TableCell>{row["Nivel de Formacion"]}</TableCell>
-                  <TableCell>{row["Tipo de Practica"]}</TableCell>
-                  <TableCell>{row["Centro Formador"]}</TableCell>
-                  <TableCell>{row["Año de Formacion"]}</TableCell>
-                  <TableCell>{row["Tipo de Jornada"]}</TableCell>
-                  <TableCell className="text-right">
-                    {row["N° de Cupos"]}
-                  </TableCell>
+        <div className="space-y-4">
+          <h3 className="font-semibold">
+            Previsualización de Datos ({data.length} alumnos encontrados)
+          </h3>
+          <div className="rounded-md border max-h-72 overflow-scroll">
+            {" "}
+            {/* Aumenté un poco el max-h y puse overflow-auto */}
+            <Table noWrapper>
+              <TableHeader className="sticky top-0 bg-background z-10">
+                <TableRow>
+                  {/* Los encabezados ahora usan el array `requiredColumns` */}
+                  {requiredColumns.map((col) => (
+                    <TableHead key={col}>{col}</TableHead>
+                  ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {data.slice(0, 10).map((row, index) => (
+                  <TableRow key={index}>
+                    {/* Las celdas ahora coinciden con cada columna requerida */}
+                    <TableCell className="whitespace-nowrap">
+                      {row.Nombre}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {row["Primer Apellido"]}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {row["Segundo Apellido"]}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {row.RUT}
+                    </TableCell>
+                    <TableCell>{row["Correo Electronico"]}</TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {row.Telefono}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {row["Nombre Contacto Emergencia"]}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {row["Telefono Contacto Emergencia"]}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+          {data.length > 10 && (
+            <p className="text-sm text-center text-muted-foreground">
+              Mostrando 10 de {data.length} registros.
+            </p>
+          )}
         </div>
       )}
 
       <div className="flex justify-end pt-4">
         <Button type="submit" disabled={data.length === 0}>
-          Guardar {data.length > 0 ? data.length : ""} Registros
+          Guardar {data.length > 0 ? data.length : ""} Alumnos
         </Button>
       </div>
     </form>

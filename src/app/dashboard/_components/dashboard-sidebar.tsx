@@ -76,8 +76,8 @@ const items: Item[] = [
     icon: Calendar,
   },
   {
-    title: "Registro de Alumnos",
-    url: "/dashboard/registro-de-alumnos",
+    title: "Gestion de Alumnos",
+    url: "/dashboard/gestion-de-alumnos",
     icon: BookOpen,
   },
   {

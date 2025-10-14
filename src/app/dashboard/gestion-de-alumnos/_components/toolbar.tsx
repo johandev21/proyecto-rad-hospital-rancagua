@@ -19,7 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ModalAgregarEstudiante } from "./modal-agregar-estudiante";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -84,8 +83,6 @@ export function DataTableToolbar<TData>({
       </div>
 
       <div className="flex w-full items-center justify-end space-x-2 md:w-auto">
-        <ModalAgregarEstudiante />
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="h-9">

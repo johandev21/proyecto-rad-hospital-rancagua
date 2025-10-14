@@ -46,8 +46,8 @@ const navigationItems = [
   },
   { title: "Programación", url: "/dashboard/programacion", icon: Calendar },
   {
-    title: "Registro de Alumnos",
-    url: "/dashboard/registro-de-alumnos",
+    title: "Gestion de Alumnos",
+    url: "/dashboard/gestion-de-alumnos",
     icon: BookOpen,
   },
   { title: "Asistencia", url: "/dashboard/asistencia", icon: ClipboardList },
