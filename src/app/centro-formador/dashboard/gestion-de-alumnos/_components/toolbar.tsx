@@ -54,7 +54,6 @@ export function DataTableToolbar<TData>({
         </div>
 
         <div className="flex w-full items-center justify-end space-x-2 md:w-auto">
-          {/* Botón para Asignar a Rotación */}
           {selectedAlumnos.length > 0 && (
             <Button
               variant="outline"
@@ -105,7 +104,6 @@ export function DataTableToolbar<TData>({
         </div>
       </div>
       
-      {/* El Modal en sí, controlado por el estado */}
       <ModalAsignarRotacion
         isOpen={isAssignModalOpen}
         onOpenChange={setIsAssignModalOpen}

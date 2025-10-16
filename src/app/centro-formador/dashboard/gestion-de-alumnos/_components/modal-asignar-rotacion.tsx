@@ -23,22 +23,17 @@ interface ModalAsignarRotacionProps {
   selectedAlumnos: Alumno[];
 }
 
-// Definimos los posibles pasos del modal
 type Step = "SELECT_CUPO" | "CONFIRM_NOMINA";
 
 export function ModalAsignarRotacion({ isOpen, onOpenChange, selectedAlumnos }: ModalAsignarRotacionProps) {
-  // Estado para controlar el paso actual del modal
   const [step, setStep] = useState<Step>("SELECT_CUPO");
-  // Estado para almacenar el cupo que el usuario selecciona
   const [selectedCupo, setSelectedCupo] = useState<CupoAprobado | null>(null);
 
-  // Se ejecuta cuando el usuario elige un cupo en el primer paso
   const handleCupoSelect = (cupo: CupoAprobado) => {
     setSelectedCupo(cupo);
-    setStep("CONFIRM_NOMINA"); // Avanzamos al siguiente paso
+    setStep("CONFIRM_NOMINA");
   };
 
-  // Se ejecuta cuando el usuario confirma el envío final de la nómina
   const handleConfirmAndSend = () => {
     console.log("--- NÓMINA FINAL ENVIADA ---");
     console.log("Cupo de Rotación:", selectedCupo);
@@ -46,21 +41,17 @@ export function ModalAsignarRotacion({ isOpen, onOpenChange, selectedAlumnos }: 
     
     alert(`Nómina enviada para el servicio de ${selectedCupo?.servicioClinico}. Revisa la consola para ver los datos completos.`);
     
-    // Cerramos el modal y reseteamos su estado para la próxima vez que se abra
     handleClose(); 
   };
   
-  // Función para cerrar y resetear el estado del modal
   const handleClose = () => {
     onOpenChange(false);
-    // Usamos un timeout para que el usuario no vea el reseteo mientras se cierra el modal
     setTimeout(() => {
         setStep("SELECT_CUPO");
         setSelectedCupo(null);
     }, 200);
   };
 
-  // Renderiza el contenido del primer paso: Selección de Cupo
   const renderSelectCupoStep = () => (
     <>
       <DialogHeader>
@@ -108,7 +99,6 @@ export function ModalAsignarRotacion({ isOpen, onOpenChange, selectedAlumnos }: 
     </>
   );
 
-  // Renderiza el contenido del segundo paso: Confirmación
   const renderConfirmNominaStep = () => (
     <>
       <DialogHeader>
@@ -118,7 +108,6 @@ export function ModalAsignarRotacion({ isOpen, onOpenChange, selectedAlumnos }: 
         </DialogDescription>
       </DialogHeader>
       <div className="py-4 space-y-6">
-        {/* Resumen del Cupo Seleccionado */}
         <div>
           <h3 className="mb-4 text-lg font-semibold">Detalles de la Rotación</h3>
           <div className="border rounded-lg p-4 space-y-3">
@@ -134,7 +123,6 @@ export function ModalAsignarRotacion({ isOpen, onOpenChange, selectedAlumnos }: 
           </div>
         </div>
         <Separator />
-        {/* Lista de Alumnos a Asignar */}
         <div>
           <h3 className="mb-4 text-lg font-semibold">Alumnos a Asignar ({selectedAlumnos.length} de {selectedCupo?.numeroCupos} cupos)</h3>
           <ScrollArea className="h-[200px] rounded-md border">

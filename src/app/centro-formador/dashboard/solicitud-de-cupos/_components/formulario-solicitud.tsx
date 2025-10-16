@@ -18,26 +18,23 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { SolicitudCentroFormador } from './data';
 
-// Helper para convertir "dd/MM/yyyy" a un objeto Date
 const parseDate = (dateString: string): Date | undefined => {
     const parts = dateString.split('/');
     if (parts.length === 3) {
       const [day, month, year] = parts.map(Number);
-      // El mes en el constructor de Date es 0-indexed (0=Enero)
       return new Date(year, month - 1, day);
     }
     return undefined;
 };
 
 interface FormularioSolicitudProps {
-  solicitud?: SolicitudCentroFormador; // Solicitud opcional para modo edición
-  onSuccess?: () => void; // Callback para cerrar el modal
+  solicitud?: SolicitudCentroFormador;
+  onSuccess?: () => void;
 }
 
 export function FormularioSolicitud({ solicitud, onSuccess }: FormularioSolicitudProps) {
   const isEditMode = !!solicitud;
   
-  // Establecer el estado inicial a partir de la solicitud si está en modo edición
   const [fechaInicio, setFechaInicio] = React.useState<Date | undefined>(
     solicitud ? parseDate(solicitud.fechaInicio) : undefined
   );
@@ -52,7 +49,6 @@ export function FormularioSolicitud({ solicitud, onSuccess }: FormularioSolicitu
     } else {
       console.log('Formulario de nueva solicitud enviado');
     }
-    // Llama al callback para cerrar el modal si se proporcionó
     if (onSuccess) {
       onSuccess();
     }
@@ -61,7 +57,6 @@ export function FormularioSolicitud({ solicitud, onSuccess }: FormularioSolicitu
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Los defaultValue se usan para poblar los campos en modo edición */}
         <div className="space-y-2">
           <Label htmlFor="carrera">Carrera</Label>
           <Input id="carrera" name="carrera" placeholder="Ej: Tens" defaultValue={solicitud?.carrera} />
@@ -119,7 +114,7 @@ export function FormularioSolicitud({ solicitud, onSuccess }: FormularioSolicitu
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant={"outline"}
+                  variant={"secondary"}
                   className={cn("w-full justify-start text-left font-normal", !fechaInicio && "text-muted-foreground")}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
@@ -136,7 +131,7 @@ export function FormularioSolicitud({ solicitud, onSuccess }: FormularioSolicitu
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant={"outline"}
+                  variant={"secondary"}
                   className={cn("w-full justify-start text-left font-normal", !fechaTermino && "text-muted-foreground")}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />

@@ -1,19 +1,7 @@
 "use client";
 
 import { useId, useState, useEffect } from "react";
-import {
-  SearchIcon,
-  Home,
-  Calendar,
-  FilePlus,
-  Settings,
-  Users,
-  BookOpen,
-  ClipboardList,
-  Coins,
-  FileText,
-  BarChart2,
-} from "lucide-react";
+import { SearchIcon, Home, FilePlus, BookOpen, FileText, Send, Bell } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import NotificationMenu from "@/components/notification-menu";
@@ -40,11 +28,25 @@ const navigationItems = [
     icon: FilePlus,
   },
   {
-    title: "Nomina de Alumnos",
-    url: "/centro-formador/dashboard/nomina-de-alumnos",
+    title: "Gestion de Alumnos",
+    url: "/centro-formador/dashboard/gestion-de-alumnos",
     icon: BookOpen,
   },
-  { title: "Documentos", url: "/centro-formador/dashboard/documentos", icon: FileText },
+  {
+    title: "Nóminas Enviadas",
+    url: "/centro-formador/dashboard/nominas-enviadas",
+    icon: Send,
+  },
+  {
+    title: "Notificaciones",
+    url: "/centro-formador/dashboard/notificaciones",
+    icon: Bell,
+  },
+  {
+    title: "Documentos",
+    url: "/centro-formador/dashboard/documentos",
+    icon: FileText,
+  },
 ];
 
 export default function DashboardHeader() {

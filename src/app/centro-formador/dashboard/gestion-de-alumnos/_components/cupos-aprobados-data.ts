@@ -1,6 +1,3 @@
-// Este archivo simula los datos de los cupos que el RAD ya ha aprobado.
-// En una aplicación real, esto vendría de una llamada a la API.
-
 export type CupoAprobado = {
   id: number;
   servicioClinico: string;

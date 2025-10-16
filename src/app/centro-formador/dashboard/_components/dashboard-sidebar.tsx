@@ -1,15 +1,4 @@
-import {
-  Calendar,
-  Home,
-  FilePlus,
-  Settings,
-  Users,
-  BookOpen,
-  ClipboardList,
-  Coins,
-  FileText,
-  BarChart2,
-} from "lucide-react";
+import { Home, FilePlus, BookOpen, FileText, Send, Bell } from "lucide-react";
 
 import {
   Sidebar,
@@ -45,16 +34,16 @@ interface Item {
 
 const data: User[] = [
   {
-    name: "admin",
-    email: "admin@example.com",
-    avatar: "/avatars/admin.jpg",
+    name: "INACAP",
+    email: "coordinador@inacap.cl",
+    avatar: "/avatars/inacap-logo.png",
   },
 ];
 
 const items: Item[] = [
   {
     title: "Inicio",
-    url: "/centro-formador/dashboard/",
+    url: "/centro-formador/dashboard",
     icon: Home,
   },
   {
@@ -63,9 +52,19 @@ const items: Item[] = [
     icon: FilePlus,
   },
   {
-    title: "Nomina de Alumnos",
-    url: "/centro-formador/dashboard/nomina-de-alumnos",
+    title: "Gestion de Alumnos",
+    url: "/centro-formador/dashboard/gestion-de-alumnos",
     icon: BookOpen,
+  },
+  {
+    title: "Nóminas Enviadas",
+    url: "/centro-formador/dashboard/nominas-enviadas",
+    icon: Send,
+  },
+  {
+    title: "Notificaciones",
+    url: "/centro-formador/dashboard/notificaciones",
+    icon: Bell,
   },
   {
     title: "Documentos",

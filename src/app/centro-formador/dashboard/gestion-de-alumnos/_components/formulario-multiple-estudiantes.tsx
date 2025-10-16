@@ -117,7 +117,6 @@ export function FormularioMultipleEstudiantes() {
     e.preventDefault();
     if (data.length > 0) {
       console.log("Datos de alumnos a enviar:", data);
-      // NOTE: Replace console.log with your API call to save the data
       alert(
         `${data.length} alumnos han sido procesados exitosamente (revisa la consola para ver los datos).`
       );
@@ -196,11 +195,9 @@ export function FormularioMultipleEstudiantes() {
           </h3>
           <div className="rounded-md border max-h-72 overflow-scroll">
             {" "}
-            {/* Aumenté un poco el max-h y puse overflow-auto */}
             <Table noWrapper>
               <TableHeader className="sticky top-0 bg-background z-10">
                 <TableRow>
-                  {/* Los encabezados ahora usan el array `requiredColumns` */}
                   {requiredColumns.map((col) => (
                     <TableHead key={col}>{col}</TableHead>
                   ))}
@@ -209,7 +206,6 @@ export function FormularioMultipleEstudiantes() {
               <TableBody>
                 {data.slice(0, 10).map((row, index) => (
                   <TableRow key={index}>
-                    {/* Las celdas ahora coinciden con cada columna requerida */}
                     <TableCell className="whitespace-nowrap">
                       {row.Nombre}
                     </TableCell>

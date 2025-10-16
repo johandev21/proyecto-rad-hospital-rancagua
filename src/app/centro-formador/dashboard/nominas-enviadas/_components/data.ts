@@ -1,7 +1,7 @@
-import { Alumno } from "../../nomina-de-alumnos/_components/data";
+import { Alumno } from "../../gestion-de-alumnos/_components/data";
 
 export type NominaEnviada = {
-  id: string; // Usamos un string para el ID de la nómina
+  id: string;
   servicioClinico: string;
   carrera: string;
   fechaInicio: string;
