@@ -54,22 +54,22 @@ const data: User[] = [
 const items: Item[] = [
   {
     title: "Inicio",
-    url: "/centro_formador/dashboard/",
+    url: "/centro-formador/dashboard/",
     icon: Home,
   },
   {
     title: "Solicitud de Cupos",
-    url: "/centro_formador/dashboard/solicitud-de-cupos",
+    url: "/centro-formador/dashboard/solicitud-de-cupos",
     icon: FilePlus,
   },
   {
     title: "Nomina de Alumnos",
-    url: "/centro_formador/dashboard/nomina-de-alumnos",
+    url: "/centro-formador/dashboard/nomina-de-alumnos",
     icon: BookOpen,
   },
   {
     title: "Documentos",
-    url: "/centro_formador/dashboard/documentos",
+    url: "/centro-formador/dashboard/documentos",
     icon: FileText,
   },
 ];

@@ -33,18 +33,18 @@ import { Kbd } from "@/components/ui/kbd";
 import { InputGroupAddon } from "@/components/ui/input-group";
 
 const navigationItems = [
-  { title: "Inicio", url: "/centro_formador/dashboard", icon: Home },
+  { title: "Inicio", url: "/centro-formador/dashboard", icon: Home },
   {
     title: "Solicitud de Cupos",
-    url: "/centro_formador/dashboard/solicitud-de-cupos",
+    url: "/centro-formador/dashboard/solicitud-de-cupos",
     icon: FilePlus,
   },
   {
     title: "Nomina de Alumnos",
-    url: "/centro_formador/dashboard/nomina-de-alumnos",
+    url: "/centro-formador/dashboard/nomina-de-alumnos",
     icon: BookOpen,
   },
-  { title: "Documentos", url: "/centro_formador/dashboard/documentos", icon: FileText },
+  { title: "Documentos", url: "/centro-formador/dashboard/documentos", icon: FileText },
 ];
 
 export default function DashboardHeader() {
