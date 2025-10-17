@@ -76,13 +76,13 @@ export function CapacidadDataTable<TData, TValue>({
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
+      <div className="rounded-md border overflow-y-auto max-h-[530px]">
+        <Table noWrapper className="bg-table text-table-foreground">
+          <TableHeader className="bg-table-header/90 sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="hover:bg-muted/20 backdrop-blur-xl">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-table-header-foreground sticky top-0 z-10">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -98,6 +98,7 @@ export function CapacidadDataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                className="hover:bg-table-row-hover"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
@@ -109,7 +110,8 @@ export function CapacidadDataTable<TData, TValue>({
                 </TableRow>
               ))
             ) : (
-              <TableRow>
+              <TableRow
+              className="hover:bg-table-row-hover">
                 <TableCell colSpan={columns.length} className="h-24 text-center">
                   No hay resultados.
                 </TableCell>

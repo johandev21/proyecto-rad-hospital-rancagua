@@ -6,6 +6,11 @@ import {
   getCoreRowModel,
   flexRender,
   getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  SortingState,
+  ColumnFiltersState,
+  VisibilityState,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -27,57 +32,72 @@ interface DataTableProps {
 }
 
 export function ResultsTable({ data }: DataTableProps) {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
+
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting,
+      columnVisibility,
+      rowSelection,
+      columnFilters,
+    },
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
 
   return (
-    <Card>
-      <div className="flex items-center justify-end p-4">
-        <Button variant="outline" size="sm">
-          <Download className="mr-2 h-4 w-4" />
-          Exportar a Excel
-        </Button>
-      </div>
-      <div className="rounded-md px-4">
-        <Card>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                {table.getHeaderGroups().map((hg) => (
-                  <TableRow key={hg.id}>
-                    {hg.headers.map((h) => (
-                      <TableHead key={h.id}>
-                        {flexRender(h.column.columnDef.header, h.getContext())}
-                      </TableHead>
+    <div className="space-y-4">
+        <div className="flex items-center justify-end">
+            <Button variant="outline" size="sm">
+                <Download className="mr-2 h-4 w-4" />
+                Exportar a Excel
+            </Button>
+        </div>
+        <div className="rounded-md border overflow-y-auto max-h-[530px]">
+            <Table noWrapper className="bg-table text-table-foreground">
+                <TableHeader className="bg-table-header/90 sticky top-0 z-10">
+                    {table.getHeaderGroups().map((hg) => (
+                        <TableRow key={hg.id} className="hover:bg-muted/20 backdrop-blur-xl">
+                            {hg.headers.map((h) => (
+                                <TableHead key={h.id} className="text-table-header-foreground sticky top-0 z-10">
+                                    {flexRender(h.column.columnDef.header, h.getContext())}
+                                </TableHead>
+                            ))}
+                        </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
+                </TableHeader>
+                <TableBody>
+                    {table.getRowModel().rows.map((row) => (
+                        <TableRow 
+                            key={row.id} 
+                            data-state={row.getIsSelected() && "selected"}
+                            className="hover:bg-table-row-hover"
+                        >
+                            {row.getVisibleCells().map((cell) => (
+                                <TableCell key={cell.id}>
+                                    {flexRender(
+                                        cell.column.columnDef.cell,
+                                        cell.getContext()
+                                    )}
+                                </TableCell>
+                            ))}
+                        </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableBody>
+                </TableBody>
             </Table>
-          </CardContent>
-        </Card>
-      </div>
-      <div className="p-4 border-t">
+        </div>
         <DataTablePagination table={table} />
-      </div>
-    </Card>
+    </div>
   );
 }

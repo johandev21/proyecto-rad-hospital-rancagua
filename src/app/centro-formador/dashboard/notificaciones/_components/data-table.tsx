@@ -12,6 +12,7 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
   RowSelectionState,
+  VisibilityState,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -37,14 +38,21 @@ export function NotificacionesDataTable<TData extends Notificacion, TValue>({
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, columnFilters, rowSelection },
+    state: { 
+      sorting, 
+      columnFilters, 
+      rowSelection,
+      columnVisibility,
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onRowSelectionChange: setRowSelection,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -54,13 +62,13 @@ export function NotificacionesDataTable<TData extends Notificacion, TValue>({
   return (
     <div className="space-y-4">
       <NotificacionesToolbar table={table} />
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
+      <div className="rounded-md border overflow-y-auto max-h-[530px]">
+        <Table noWrapper className="bg-table text-table-foreground">
+          <TableHeader className="bg-table-header/90 sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="hover:bg-muted/20 backdrop-blur-xl">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-table-header-foreground sticky top-0 z-10">
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
@@ -73,7 +81,7 @@ export function NotificacionesDataTable<TData extends Notificacion, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className={!row.original.leida ? "bg-primary-foreground font-semibold" : ""}
+                  className={`hover:bg-table-row-hover ${!row.original.leida ? "bg-primary-foreground font-semibold" : ""}`}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -83,7 +91,7 @@ export function NotificacionesDataTable<TData extends Notificacion, TValue>({
                 </TableRow>
               ))
             ) : (
-              <TableRow>
+              <TableRow className="hover:bg-table-row-hover">
                 <TableCell colSpan={columns.length} className="h-24 text-center">
                   No tienes notificaciones.
                 </TableCell>

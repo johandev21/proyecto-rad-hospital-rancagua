@@ -48,7 +48,7 @@ export function SolicitudesDataTable<TData extends { observacion?: string }, TVa
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
-    getRowCanExpand: (row) => !!row.original.observacion, 
+    getRowCanExpand: (row) => !!row.original.observacion,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -59,13 +59,13 @@ export function SolicitudesDataTable<TData extends { observacion?: string }, TVa
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
+      <div className="rounded-md border overflow-y-auto max-h-[530px]">
+        <Table noWrapper className="bg-table text-table-foreground">
+          <TableHeader className="bg-table-header/90 sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="hover:bg-muted/20 backdrop-blur-xl">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-table-header-foreground sticky top-0 z-10">
                     {header.isPlaceholder
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}
@@ -78,7 +78,10 @@ export function SolicitudesDataTable<TData extends { observacion?: string }, TVa
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <React.Fragment key={row.id}>
-                  <TableRow data-state={row.getIsSelected() && "selected"}>
+                  <TableRow
+                    data-state={row.getIsSelected() && "selected"}
+                    className="hover:bg-table-row-hover"
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -101,7 +104,7 @@ export function SolicitudesDataTable<TData extends { observacion?: string }, TVa
                 </React.Fragment>
               ))
             ) : (
-              <TableRow>
+              <TableRow className="hover:bg-table-row-hover">
                 <TableCell colSpan={columns.length} className="h-24 text-center">
                   No hay resultados.
                 </TableCell>

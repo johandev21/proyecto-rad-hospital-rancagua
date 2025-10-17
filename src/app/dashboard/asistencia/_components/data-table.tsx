@@ -33,17 +33,12 @@ export function AsistenciaDataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [attendanceData, setAttendanceData] = React.useState(data);
   const [originalData, setOriginalData] = React.useState(data);
-  // Estados para los filtros de fecha
   const [viewMode, setViewMode] = React.useState<"day" | "range">("day");
   const [date, setDate] = React.useState<Date>(new Date());
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>();
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-
-  const hasChanges =
-    JSON.stringify(attendanceData) !== JSON.stringify(originalData);
+  const hasChanges = JSON.stringify(attendanceData) !== JSON.stringify(originalData);
 
   const table = useReactTable({
     data: attendanceData,
@@ -73,9 +68,7 @@ export function AsistenciaDataTable<TData, TValue>({
 
   React.useEffect(() => {
     if (viewMode === "day") {
-      console.log(
-        `Cargando datos para el DÍA: ${date.toISOString().split("T")[0]}`
-      );
+      console.log(`Cargando datos para el DÍA: ${date.toISOString().split("T")[0]}`);
     } else if (viewMode === "range" && dateRange?.from && dateRange?.to) {
       console.log(
         `Cargando datos para el RANGO: ${
@@ -98,13 +91,13 @@ export function AsistenciaDataTable<TData, TValue>({
         hasChanges={hasChanges}
         onSaveChanges={handleSaveChanges}
       />
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
+      <div className="rounded-md border overflow-y-auto max-h-[530px]">
+        <Table noWrapper className="bg-table text-table-foreground">
+          <TableHeader className="bg-table-header/90 sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="hover:bg-muted/20 backdrop-blur-xl">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-table-header-foreground sticky top-0 z-10">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -119,7 +112,7 @@ export function AsistenciaDataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} className="hover:bg-table-row-hover">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
@@ -131,7 +124,7 @@ export function AsistenciaDataTable<TData, TValue>({
                 </TableRow>
               ))
             ) : (
-              <TableRow>
+              <TableRow className="hover:bg-table-row-hover">
                 <TableCell
                   colSpan={columns.length}
                   className="h-24 text-center"
@@ -143,6 +136,7 @@ export function AsistenciaDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination table={table} />
     </div>
   );
 }

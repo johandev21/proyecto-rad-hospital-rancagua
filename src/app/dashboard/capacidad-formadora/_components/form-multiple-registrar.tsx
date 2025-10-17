@@ -95,7 +95,7 @@ export function FormularioRegistrarMultiple() {
         setError("Hubo un error crítico al leer el archivo.");
         setFile(null);
       };
-      reader.readAsBinaryString(selectedFile);
+      reader.readAsArrayBuffer(selectedFile);
     }
   };
 

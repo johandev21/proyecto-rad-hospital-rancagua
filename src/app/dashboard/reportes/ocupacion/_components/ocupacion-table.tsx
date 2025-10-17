@@ -27,24 +27,32 @@ export function OcupacionTable({ data }: OcupacionTableProps) {
         </div>
       </CardHeader>
       <CardContent>
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                {table.getHeaderGroups().map(hg => (
-                  <TableRow key={hg.id}>
-                    {hg.headers.map(h => <TableHead key={h.id}>{flexRender(h.column.columnDef.header, h.getContext())}</TableHead>)}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows.map(row => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map(cell => <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>)}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+        <div className="rounded-md border overflow-y-auto max-h-[530px]">
+          <Table noWrapper className="bg-table text-table-foreground">
+            <TableHeader className="bg-table-header/90 sticky top-0 z-10">
+              {table.getHeaderGroups().map(hg => (
+                <TableRow key={hg.id} className="hover:bg-muted/20 backdrop-blur-xl">
+                  {hg.headers.map(h => (
+                    <TableHead key={h.id} className="text-table-header-foreground sticky top-0 z-10">
+                      {flexRender(h.column.columnDef.header, h.getContext())}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.map(row => (
+                <TableRow key={row.id} className="hover:bg-table-row-hover">
+                  {row.getVisibleCells().map(cell => (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </CardContent>
     </Card>
   );
