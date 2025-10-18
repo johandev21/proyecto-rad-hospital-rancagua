@@ -1,3 +1,5 @@
+"use client";
+
 import { Home, CalendarClock } from "lucide-react";
 
 import {
@@ -19,6 +21,7 @@ import {
 } from "./sidebar-menu-item-wrapper";
 import { NavUser } from "./nav-user";
 import Logo from "./logo";
+import { usePathname } from "next/navigation";
 
 interface User {
   name: string;
@@ -54,6 +57,8 @@ const items: Item[] = [
 ];
 
 export function DashboardSidebar() {
+  const pathname = usePathname();
+
   return (
     <TooltipProviderWrapper>
       <Sidebar collapsible="icon">
@@ -62,18 +67,30 @@ export function DashboardSidebar() {
             <SidebarGroupContent>
               <Logo />
               <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarTooltipWrapper title={item.title}>
-                      <SidebarMenuButton className="py-5" asChild>
-                        <Link href={item.url}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarTooltipWrapper>
-                  </SidebarMenuItem>
-                ))}
+                {items.map((item) => {
+                  const isBaseDashboard =
+                    item.url === "/jefe-servicio/dashboard";
+                  const isActive = isBaseDashboard
+                    ? pathname === item.url
+                    : pathname.startsWith(item.url);
+
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarTooltipWrapper title={item.title}>
+                        <SidebarMenuButton
+                          className="py-5"
+                          data-active={isActive}
+                          asChild
+                        >
+                          <Link href={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarTooltipWrapper>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

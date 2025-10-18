@@ -1,3 +1,5 @@
+"use client"; // 1. Added this
+
 import { Home, FilePlus, BookOpen, FileText, Send, Bell } from "lucide-react";
 
 import {
@@ -19,6 +21,7 @@ import {
 } from "./sidebar-menu-item-wrapper";
 import { NavUser } from "./nav-user";
 import Logo from "./logo";
+import { usePathname } from "next/navigation"; // 2. Imported this
 
 interface User {
   name: string;
@@ -74,6 +77,8 @@ const items: Item[] = [
 ];
 
 export function DashboardSidebar() {
+  const pathname = usePathname(); // 3. Get the current pathname
+
   return (
     <TooltipProviderWrapper>
       <Sidebar collapsible="icon">
@@ -82,18 +87,31 @@ export function DashboardSidebar() {
             <SidebarGroupContent>
               <Logo />
               <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarTooltipWrapper title={item.title}>
-                      <SidebarMenuButton className="py-5" asChild>
-                        <Link href={item.url}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarTooltipWrapper>
-                  </SidebarMenuItem>
-                ))}
+                {items.map((item) => {
+                  // 4. Check if the item is active
+                  const isBaseDashboard =
+                    item.url === "/centro-formador/dashboard";
+                  const isActive = isBaseDashboard
+                    ? pathname === item.url // Exact match for "Inicio"
+                    : pathname.startsWith(item.url); // Partial match for all others
+
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarTooltipWrapper title={item.title}>
+                        <SidebarMenuButton
+                          className="py-5"
+                          data-active={isActive} // 5. Pass active state
+                          asChild
+                        >
+                          <Link href={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarTooltipWrapper>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
