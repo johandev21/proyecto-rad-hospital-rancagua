@@ -4,7 +4,7 @@ import DashboardHeader from "./_components/dashboard-header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-muted/40">
+    <div className="flex min-h-screen">
       <SidebarProvider>
         <DashboardSidebar />
 

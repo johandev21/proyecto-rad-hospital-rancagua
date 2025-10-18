@@ -13,6 +13,8 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
   FilterFn,
+  VisibilityState,
+  RowSelectionState,
 } from "@tanstack/react-table";
 import { rankItem, RankingInfo } from "@tanstack/match-sorter-utils";
 import {
@@ -54,19 +56,27 @@ export function RotacionesDataTable<TData extends RotacionServicio, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = React.useState("");
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
 
   const table = useReactTable({
     data,
     columns,
     filterFns: { fuzzy: fuzzyFilter },
-    state: { sorting, columnFilters, globalFilter },
+    state: { 
+      sorting, 
+      columnFilters, 
+      globalFilter,
+      columnVisibility,
+      rowSelection,
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
     globalFilterFn: fuzzyFilter,
     getRowCanExpand: (row) =>
       !!row.original.alumnosAsignados &&
@@ -80,13 +90,11 @@ export function RotacionesDataTable<TData extends RotacionServicio, TValue>({
 
   const AlumnoDetail = ({ alumno }: { alumno: Alumno }) => (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-2 p-3 border rounded bg-card mb-2 shadow-sm">
-      {/* Nombre y RUT */}
       <div className="lg:col-span-1 flex flex-col">
         <span className="text-xs text-muted-foreground">Alumno</span>
         <span className="font-medium">{`${alumno.nombre} ${alumno.primerApellido} ${alumno.segundoApellido}`}</span>
         <span className="text-sm text-muted-foreground">{alumno.rut}</span>
       </div>
-      {/* Contacto Alumno */}
       <div className="lg:col-span-1 flex flex-col space-y-1">
         <span className="text-xs text-muted-foreground">Contacto Alumno</span>
         <div className="flex items-center gap-2 text-sm">
@@ -98,7 +106,6 @@ export function RotacionesDataTable<TData extends RotacionServicio, TValue>({
           <span className="truncate">{alumno.correo || "N/A"}</span>
         </div>
       </div>
-      {/* Contacto Emergencia */}
       <div className="lg:col-span-1 flex flex-col space-y-1">
         <span className="text-xs text-muted-foreground">
           Contacto Emergencia
@@ -112,7 +119,6 @@ export function RotacionesDataTable<TData extends RotacionServicio, TValue>({
           <span className="truncate">{alumno.telefonoEmergencia || "N/A"}</span>
         </div>
       </div>
-      {/* Institución */}
       <div className="lg:col-span-1 flex flex-col">
         <span className="text-xs text-muted-foreground">Institución</span>
         <span className="text-sm">{alumno.institucion}</span>
@@ -123,13 +129,13 @@ export function RotacionesDataTable<TData extends RotacionServicio, TValue>({
   return (
     <div className="space-y-4">
       <RotacionesToolbar table={table} />
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
+      <div className="rounded-md border overflow-y-auto max-h-[530px]">
+        <Table noWrapper className="bg-table text-table-foreground">
+          <TableHeader className="bg-table-header/90 sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="hover:bg-muted/20 backdrop-blur-xl">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-table-header-foreground sticky top-0 z-10">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -145,7 +151,10 @@ export function RotacionesDataTable<TData extends RotacionServicio, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <React.Fragment key={row.id}>
-                  <TableRow data-state={row.getIsSelected() && "selected"}>
+                  <TableRow 
+                    data-state={row.getIsSelected() && "selected"}
+                    className="hover:bg-table-row-hover"
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
                         {flexRender(
@@ -177,7 +186,7 @@ export function RotacionesDataTable<TData extends RotacionServicio, TValue>({
                 </React.Fragment>
               ))
             ) : (
-              <TableRow>
+              <TableRow className="hover:bg-table-row-hover">
                 <TableCell
                   colSpan={columns.length}
                   className="h-24 text-center"
